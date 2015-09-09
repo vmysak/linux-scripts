@@ -1,0 +1,52 @@
+#!/bin/bash
+
+#=======================================
+#  This script is used to output audio
+#  strem to external sound card (DAC)
+#=======================================
+
+function killPIDs {
+  pkill kmix
+  pkill pulseaudio
+  pkill plugin-containe && pkill plugin-container
+  pkill skype
+  pulseaudio -D > /dev/null 2>&1
+}
+
+function getCards {
+  cards=$(pacmd list-sinks | grep "name: <")
+  cardNumber=$(echo $cards | tr 'name:' '\n' | grep '<*>' | wc -l)
+  ar=($cards)
+  dacSwitchCards=/tmp/dac-switch-cards.tmp
+  rm $dacSwitchCards
+  echo ""
+  echo "Cards found: "
+  for (( c=1; c<=$cardNumber; c++ ))
+  do
+    echo "["$(($c-1))"] "${ar[2*$c-1]}
+    echo ${ar[2*$c-1]} >> $dacSwitchCards
+  done
+}
+
+function setCurrentConfig {
+  dacSwitchConf=/tmp/dac-switch-conf.tmp
+  kmixrc=~/.kde/share/config/kmixrc
+  
+  echo ""
+  echo "Please provide card number to be chosen: "
+  read number
+  selected=$(sed -n $(($number+1))'p' $dacSwitchCards)
+  neededLen=$((${#selected}-2))
+  devName=${selected:1:neededLen}
+  echo "You have selected:" && echo $devName
+  echo "Done."
+  lineNum=$(grep -n "MasterMixerDevice=*" $kmixrc | grep -Eo '^[^:]+')
+  sed -i $lineNum's/.*/MasterMixerDevice='$devName'/' $kmixrc
+  
+  pacmd set-default-sink $number > /dev/null 2>&1
+  kmix > /dev/null 2>&1
+}
+
+killPIDs
+getCards
+setCurrentConfig
