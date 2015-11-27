@@ -10,7 +10,7 @@ function killPIDs {
   pkill pulseaudio
   pkill plugin-containe && pkill plugin-container
   pkill skype
-  pulseaudio --system > /dev/null 2>&1
+  pulseaudio -D > /dev/null 2>&1
 }
 
 function getCards {
