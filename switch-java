@@ -1,0 +1,33 @@
+#!/bin/bash
+
+ENV_FILE="/etc/environment"
+JAVA_BIN_DIR="/usr/bin"
+JAVA_BIN_MASK="^java*"
+JDKSdir="/usr/lib/java"
+JDKSarr=()
+
+echo "JDKs found:"
+cd $JDKSdir
+
+i=0
+for file in `ls $JDKSdir`; 
+do
+    if  [[ $file == jdk* ]];
+    then
+        ((i++))
+        echo "($i) $file"
+        JDKSarr[$i]=$file
+    fi
+done
+
+echo "Please select JDK to use:"
+read selectedJDK
+echo "Selected: ${JDKSarr[$selectedJDK]}"
+
+for file in `ls $JAVA_BIN_DIR | grep $JAVA_BIN_MASK`
+do
+    unlink $JAVA_BIN_DIR/$file
+done
+ln -s $JDKSdir/${JDKSarr[$selectedJDK]}/bin/java* $JAVA_BIN_DIR
+sed -i "s:^JAVA_HOME=.*$:JAVA_HOME=\"$JDKSdir/${JDKSarr[$selectedJDK]}/\":g" $ENV_FILE
+source $ENV_FILE
