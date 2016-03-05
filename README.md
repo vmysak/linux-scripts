@@ -6,3 +6,5 @@
 [kwin-restart](./kwin-restart) - script used to restart kwin service in KDE if something goes wrong
 
 [switch-java](./switch-java) - script used to switch JDK version in linux
+
+[set-primary-display](./set-primary-display) - script used to switch primary display (HDMI default)
