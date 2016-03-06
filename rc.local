@@ -1,0 +1,23 @@
+#!/bin/bash
+
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -t mangle -I POSTROUTING -o enp4s0 -j TTL --ttl-set 129
+echo 129 >> /proc/sys/net/ipv4/ip_default_ttl
+
+# SSD optimization
+##################
+
+fstrim -v /
+echo "deadline" > /sys/block/sda/queue/scheduler
+
+##################
+
+exit 0
