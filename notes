@@ -1,2 +1,5 @@
 export ATOM_NODE_URL=http://gh-contractor-zcbenz.s3.amazonaws.com/atom-shell/dist # Atom proxy
 /usr/lib/java/jdk1.6.0_31/bin/java -jar /root/Downloads/tzupdater-2_1_0/tzupdater-2.1.0/tzupdater.jar -l file:///root/Downloads/tzupdater-2_1_0/tzupdater-2.1.0/tzdata-latest.tar.gz
+
+
+khotnewstuff4 /etc/xdg/plasmoids.knsrc
