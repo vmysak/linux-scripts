@@ -3,3 +3,5 @@ export ATOM_NODE_URL=http://gh-contractor-zcbenz.s3.amazonaws.com/atom-shell/dis
 
 
 khotnewstuff4 /etc/xdg/plasmoids.knsrc
+
+sudo dnf install ffmpeg-libs
