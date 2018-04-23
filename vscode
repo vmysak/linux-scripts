@@ -1,0 +1,7 @@
+#!/bin/bash
+
+mkdir /root/.vscode
+mkdir /root/.config/Code
+cd /root/.vscode/
+#code --user-data-dir=/root/.vscode
+/usr/share/code/code --unity-launch %F
