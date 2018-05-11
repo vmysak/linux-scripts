@@ -6,3 +6,5 @@ khotnewstuff4 /etc/xdg/plasmoids.knsrc
 
 sudo dnf install ffmpeg-libs
 https://www.youtube.com/html5
+
+dnf remove plasma-pk-updates
