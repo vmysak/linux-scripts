@@ -108,5 +108,4 @@ else
     start_agent;
 fi
 
-hash -d java=/media/vmysak/DiskC/Projects
-hash -d java-c=/media/vmysak/DiskC/Projects
+hash -d proj=/root/Projects
