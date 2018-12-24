@@ -1,0 +1,3 @@
+#!/bin/bash
+
+nmcli connection modify EP ipv4.route-metric 200
