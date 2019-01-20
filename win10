@@ -1,4 +1,7 @@
 (MI NOTEBOOK PRO)
+In BIOS select UEFI boot mode. Seems in legacy works only with MS-DOS Partition on target drive
+
+OK: MS-DOS on Flash -> GPT on SSD , (not tested) MS-DOS -> MS-DOS 
 
 
 1. Download windows media creation tool (MCT)
