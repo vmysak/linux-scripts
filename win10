@@ -1,4 +1,5 @@
 1. Download windows media creation tool (MCT)
 2. Download windows iso from MCT, <4gb. Usual download from microsoft web site doesn't work
-3. Create FAT32 partition on USB, 4gb, GPT, name WIN_USB
-4. Copy Files cp -R ./*
+3. Create FAT32 partition on USB, 4096MB, GPT, name WIN_USB
+4. mount -o loop
+5. Copy Files cp -R ./*
