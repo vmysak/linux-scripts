@@ -1,3 +1,6 @@
+https://miketerrill.net/2016/10/16/usb-flash-drives-uefi-and-large-wims/
+
+
 1. Download windows media creation tool (MCT)
 2. Download windows iso from MCT, <4gb. Usual download from microsoft web site doesn't work
 3. Gparted!!!   Create FAT32 partition on USB, 6048MB, GPT, name WIN2010, label WIN2010
