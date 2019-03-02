@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
 '''
-chmod +x
-plugins-dir
 ShellOut.py
 call an external program passing the active layer as a temp file.  Windows Only(?)
 
@@ -77,6 +75,7 @@ def listcommands(option=None):
   nikWine("Sharpener Pro 3 (Output Sharpener)", "Sharpener Pro 3", "SHP3OS"),
   nikWine("Sharpener Pro 3 (Raw Pre Sharpener)", "Sharpener Pro 3", "SHP3RPS"),
   nikWine("Viveza 2"),
+  ["Darktable", ["darktable"],"tif"],
   ["",[],""]
   ]
   
