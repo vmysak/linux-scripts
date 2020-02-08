@@ -18,8 +18,8 @@ for i in /dev /dev/pts /proc /sys /sys/firmware/efi/efivars /run; do sudo mount 
 cp -R /usr/lib/grub/x86_64-efi /mounted/usr/lib/grub/
 sudo chroot /mounted
 yum install grub2-efi-x64 shim-x64  && yum reinstall grub2-efi-x64 shim-x64
-exit
-
 echo 'LABEL=EFI /boot/efi vfat defaults 0 2' >> /etc/fstab ## check for existing efi entry; replace UUID or remove
+grub2-install --target=x86_64-efi ##### ????????????????????/
 
-grub2-install --target=x86_64-efi
+exit
+efibootmgr -c -w -L Fedora -d /dev/sdc -p 2 -l \EFI\fedora\shim.efi
