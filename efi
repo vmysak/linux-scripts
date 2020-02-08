@@ -3,19 +3,20 @@ https://forums.gentoo.org/viewtopic-t-1002254-start-0.html
 #######################################################################
 UEFI/GPT
 
-yum install grub2-efi-x64-modules.noarch
 su - root
+
+yum install grub2-efi-x64-modules.noarch
+mkdosfs -F 32 -n EFI /dev/sdcEFIx # if needed to create EFI partition from scratch
+
 mkdir /mounted
 mount /dev/sdcX /mounted
 mount /dev/sdcEFIx /mounted/boot/efi
 for i in /dev /dev/pts /proc /sys /run; do
 sudo mount -B $i /mounted$i; done
 cp -R /usr/lib/grub/x86_64-efi /mounted/usr/lib/grub/
-sudo chroot /mnt
+sudo chroot /mounted
 
-mkdosfs -F 32 -n EFI /dev/sdcEFIx
-mkdir /boot/efi
+
 echo 'LABEL=EFI /boot/efi vfat defaults 0 2' >> /etc/fstab ## check for existing efi entry; replace UUID or remove
-mount /boot/efi	
 
 grub2-install --target=x86_64-efi
