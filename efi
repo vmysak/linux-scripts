@@ -3,8 +3,8 @@
 WITHOUT GRUB NEEDED $$ UEFI/GPT 
 https://unix.stackexchange.com/questions/83669/how-to-recreate-efi-boot-partition
 
-modprobe efivarfs
 su - root
+modprobe efivarfs
 
 efibootmgr -D
 efibootmgr -B -b 000X ## clear old entries
