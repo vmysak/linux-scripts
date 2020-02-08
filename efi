@@ -1,13 +1,13 @@
+UEFI/GPT 
+https://unix.stackexchange.com/questions/83669/how-to-recreate-efi-boot-partition
+https://docs.fedoraproject.org/en-US/Fedora/22/html/Multiboot_Guide/common_operations_appendix.html#common-chroot_from_live
+https://docs.fedoraproject.org/en-US/Fedora/22/html/Multiboot_Guide/GRUB-reinstalling.html
+https://forums.gentoo.org/viewtopic-t-1002254-start-0.html
 
 #####################################################################
-WITHOUT GRUB NEEDED $$ UEFI/GPT 
-https://unix.stackexchange.com/questions/83669/how-to-recreate-efi-boot-partition
 
 su - root
 modprobe efivarfs
-
-efibootmgr -D
-efibootmgr -B -b 000X ## clear old entries
 
 mkdosfs -F 32 -n EFI /dev/sdEFIx # !!!!!!!!!!!!!! CAREFUL WITH NUMBER if needed to create EFI partition from scratch
 
@@ -16,48 +16,17 @@ mount /dev/sdOSx /mounted
 mount /dev/sdEFIx /mounted/boot/efi
 for i in /dev /dev/pts /proc /sys /sys/firmware/efi/efivars /run; do sudo mount -B $i /mounted$i; done
 mkdir -p /mounted/boot/efi/EFI/fedora/
-cp /mounted/boot/vmlinuz-<v> /mounted/boot/efi/EFI/fedora/vmlinuz
-cp /mounted/boot/initramfs-<v> /mounted/boot/efi/EFI/fedora/initramfs
-
-blkid -s UUID -o value /dev/sdOSx # disk_uuid
-
-echo "root=UUID=<disk_uuid> ro quiet rootfstype=ext4 add_efi_memmap initrd=\\EFI\\fedora\\initramfs" |
-  iconv -f ascii -t ucs2 |
-  efibootmgr \
-    --create --gpt \
-    --disk /dev/sdEFI --part x \
-    --label "Fedora" \
-    --loader "\\EFI\\fedora\\vmlinuz" \
-    --write-signature --append-binary-args -
-
-
-
-
-#######################################################################
-#######################################################################
-WITH GRUB $$ UEFI/GPT 
-https://docs.fedoraproject.org/en-US/Fedora/22/html/Multiboot_Guide/common_operations_appendix.html#common-chroot_from_live
-https://docs.fedoraproject.org/en-US/Fedora/22/html/Multiboot_Guide/GRUB-reinstalling.html
-https://forums.gentoo.org/viewtopic-t-1002254-start-0.html
-
-
-modprobe efivarfs
-su - root
-
-mkdosfs -F 32 -n EFI /dev/sdcEFIx # !!!!!!!!!!!!!! CAREFUL WITH NUMBER if needed to create EFI partition from scratch
-
-mkdir /mounted
-mount /dev/sdcX /mounted
-mount /dev/sdcEFIx /mounted/boot/efi
-
-?????????? yum install grub2-efi-x64-modules.noarch
-?????????? cp -R /usr/lib/grub/x86_64-efi /mounted/usr/lib/grub/
-
-for i in /dev /dev/pts /proc /sys /sys/firmware/efi/efivars /run; do sudo mount -B $i /mounted$i; done
+cp -R /boot/efi/EFI/fedora/* /mounted/boot/efi/EFI/fedora/
 
 sudo chroot /mounted
+
 yum install grub2-efi-x64 shim-x64  && yum reinstall grub2-efi-x64 shim-x64
-efibootmgr -c -w -L Fedora -d /dev/sdX -p partNumberWithOS -l \EFI\fedora\shim.efi
+
+efibootmgr -D
+efibootmgr -B -b 000X ## clear old entries
+
+blkid -s UUID -o value /dev/sdX # disk_uuid
 echo 'LABEL=EFI /boot/efi vfat defaults 0 2' >> /etc/fstab ## check for existing efi entry; replace UUID or remove
-grub2-mkconfig
+
+efibootmgr -c -w -L Fedora -d /dev/sdz -p 1 -l \EFI\fedora\shimx64.efi
 
