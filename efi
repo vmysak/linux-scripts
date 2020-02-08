@@ -2,44 +2,20 @@ https://forums.gentoo.org/viewtopic-t-1002254-start-0.html
 
 #######################################################################
 UEFI/GPT
-EFI system partition
-
-For UEFI boot, your disk must have a dedicated "EFI system partition" containing a FAT filesystem. 200 MB should be large enough.
-
-If you need to create an EFI system partition, first create it in gdisk or parted with the proper type. In gdisk, this is type ef00.
-
-Create a FAT filesystem using mkdosfs and add it to fstab.
-root # mkdosfs -F 32 -n efi-boot /dev/sda1
-root # mkdir /boot/efi
-root # echo 'LABEL=efi-boot /boot/efi vfat defaults 0 2' >> /etc/fstab
-root # mount /boot/efi	
-
-
-Quote:	
-Install GRUB
-
-yum install grub2-efi-x64-modules.noarch
-cp -R /usr/lib/grub/x86_64-efi /mounted/usr/lib/grub/
-root # grub2-install --target=x86_64-efi
-
-This will install grub in /boot/grub, copy the core image to /boot/efi/EFI/gentoo/grubx64.efi, and call efibootmgr to add a boot entry.
-Alternative: Using the default location
-
-If the system fails to find your bootloader, you can alternatively use the default location. This circumvents the boot menu managed by efibootmgr and thus offers reduced functionality (but is less error-prone). For this copy the file grubx64.efi to EFI/BOOT/BOOTX64.EFI on your EFI system partition (assuming you have an amd64 system, if not the file name has to be adjusted).
-
-
-and there is the difference
-
-Code:	
-root # grub2-install --target=x86_64-efi 
-
-#########################################################################
 
 yum install grub2-efi-x64-modules.noarch
 su - root
-mount /dev/sdc2 /mnt
-mount /dev/sdc1 /mnt/boot/efi
+mkdir /mounted
+mount /dev/sdcX /mounted
+mount /dev/sdcEFIx /mounted/boot/efi
 for i in /dev /dev/pts /proc /sys /run; do
-sudo mount -B $i /mnt$i; done
+sudo mount -B $i /mounted$i; done
 cp -R /usr/lib/grub/x86_64-efi /mounted/usr/lib/grub/
 sudo chroot /mnt
+
+mkdosfs -F 32 -n EFI /dev/sdcEFIx
+mkdir /boot/efi
+echo 'LABEL=EFI /boot/efi vfat defaults 0 2' >> /etc/fstab ## check for existing efi entry; replace UUID or remove
+mount /boot/efi	
+
+grub2-install --target=x86_64-efi
