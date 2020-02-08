@@ -3,7 +3,7 @@ https://forums.gentoo.org/viewtopic-t-1002254-start-0.html
 #######################################################################
 UEFI/GPT
 
-modprobe efivars
+modprobe efivarfs
 su - root
 
 yum install grub2-efi-x64-modules.noarch
