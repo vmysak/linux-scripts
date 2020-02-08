@@ -1,9 +1,45 @@
+
+#####################################################################
+WITHOUT GRUB NEEDED $$ UEFI/GPT 
+https://unix.stackexchange.com/questions/83669/how-to-recreate-efi-boot-partition
+
+modprobe efivarfs
+su - root
+
+efibootmgr -D
+efibootmgr -B -b 000X ## clear old entries
+
+mkdosfs -F 32 -n EFI /dev/sdEFIx # !!!!!!!!!!!!!! CAREFUL WITH NUMBER if needed to create EFI partition from scratch
+
+mkdir /mounted
+mount /dev/sdOSx /mounted
+mount /dev/sdEFIx /mounted/boot/efi
+for i in /dev /dev/pts /proc /sys /sys/firmware/efi/efivars /run; do sudo mount -B $i /mounted$i; done
+mkdir -p /mounted/boot/efi/EFI/fedora/
+cp /mounted/boot/vmlinuz-<v> /mounted/boot/efi/EFI/fedora/vmlinuz
+cp /mounted/boot/initramfs-<v> /mounted/boot/efi/EFI/fedora/initramfs
+
+blkid -s UUID -o value /dev/sdOSx # disk_uuid
+
+echo "root=UUID=<disk_uuid> ro quiet rootfstype=ext4 add_efi_memmap initrd=\\EFI\\fedora\\initramfs" |
+  iconv -f ascii -t ucs2 |
+  efibootmgr \
+    --create --gpt \
+    --disk /dev/sdEFI --part x \
+    --label "Fedora" \
+    --loader "\\EFI\\fedora\\vmlinuz" \
+    --write-signature --append-binary-args -
+
+
+
+
+#######################################################################
+#######################################################################
+WITH GRUB $$ UEFI/GPT 
 https://docs.fedoraproject.org/en-US/Fedora/22/html/Multiboot_Guide/common_operations_appendix.html#common-chroot_from_live
 https://docs.fedoraproject.org/en-US/Fedora/22/html/Multiboot_Guide/GRUB-reinstalling.html
 https://forums.gentoo.org/viewtopic-t-1002254-start-0.html
 
-#######################################################################
-UEFI/GPT
 
 modprobe efivarfs
 su - root
