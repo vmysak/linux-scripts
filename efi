@@ -20,6 +20,7 @@ sudo chroot /mounted
 yum install grub2-efi-x64 shim-x64  && yum reinstall grub2-efi-x64 shim-x64
 echo 'LABEL=EFI /boot/efi vfat defaults 0 2' >> /etc/fstab ## check for existing efi entry; replace UUID or remove
 grub2-install --target=x86_64-efi ##### ????????????????????/
+grub2-mkconfig
 
 exit
 efibootmgr -c -w -L Fedora -d /dev/sdc -p 2 -l \EFI\fedora\shim.efi
