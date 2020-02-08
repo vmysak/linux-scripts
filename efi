@@ -30,3 +30,4 @@ echo 'LABEL=EFI /boot/efi vfat defaults 0 2' >> /etc/fstab ## check for existing
 
 efibootmgr -c -w -L Fedora -d /dev/sdz -p 1 -l \EFI\fedora\shimx64.efi
 
+grub2-mkconfig -o /boot/grub2/grub.cfg
