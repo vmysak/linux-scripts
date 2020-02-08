@@ -17,6 +17,8 @@ root # mount /boot/efi
 
 Quote:	
 Install GRUB
+
+yum install grub2-efi-aa64-modules
 root # grub2-install --target=x86_64-efi
 
 This will install grub in /boot/grub, copy the core image to /boot/efi/EFI/gentoo/grubx64.efi, and call efibootmgr to add a boot entry.
@@ -32,6 +34,7 @@ root # grub2-install --target=x86_64-efi
 
 #########################################################################
 
+yum install grub2-efi-aa64-modules
 su - root
 mount /dev/sdc2 /mnt
 mount /dev/sdc1 /mnt/boot/efi
