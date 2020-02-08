@@ -23,4 +23,4 @@ grub2-install --target=x86_64-efi ##### ????????????????????/
 grub2-mkconfig
 
 exit
-efibootmgr -c -w -L Fedora -d /dev/sdc -p 2 -l \EFI\fedora\shim.efi
+efibootmgr -c -w -L Fedora -d /dev/sdX -p partNumberWithOS -l \EFI\fedora\shim.efi
