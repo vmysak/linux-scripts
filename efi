@@ -9,7 +9,6 @@ modprobe efivarfs
 su - root
 
 mkdosfs -F 32 -n EFI /dev/sdcEFIx # !!!!!!!!!!!!!! CAREFUL WITH NUMBER if needed to create EFI partition from scratch
-efibootmgr -c -w -L Fedora -d /dev/sdX -p partNumberWithOS -l \EFI\fedora\shim.efi
 
 mkdir /mounted
 mount /dev/sdcX /mounted
@@ -22,6 +21,7 @@ for i in /dev /dev/pts /proc /sys /sys/firmware/efi/efivars /run; do sudo mount 
 
 sudo chroot /mounted
 yum install grub2-efi-x64 shim-x64  && yum reinstall grub2-efi-x64 shim-x64
+efibootmgr -c -w -L Fedora -d /dev/sdX -p partNumberWithOS -l \EFI\fedora\shim.efi
 echo 'LABEL=EFI /boot/efi vfat defaults 0 2' >> /etc/fstab ## check for existing efi entry; replace UUID or remove
 grub2-mkconfig
 
