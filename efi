@@ -19,6 +19,7 @@ Quote:
 Install GRUB
 
 yum install grub2-efi-x64-modules.noarch
+cp -R /usr/lib/grub/x86_64-efi /mounted/usr/lib/grub/
 root # grub2-install --target=x86_64-efi
 
 This will install grub in /boot/grub, copy the core image to /boot/efi/EFI/gentoo/grubx64.efi, and call efibootmgr to add a boot entry.
@@ -40,4 +41,5 @@ mount /dev/sdc2 /mnt
 mount /dev/sdc1 /mnt/boot/efi
 for i in /dev /dev/pts /proc /sys /run; do
 sudo mount -B $i /mnt$i; done
+cp -R /usr/lib/grub/x86_64-efi /mounted/usr/lib/grub/
 sudo chroot /mnt
