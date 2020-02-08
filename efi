@@ -8,19 +8,20 @@ UEFI/GPT
 modprobe efivarfs
 su - root
 
-yum install grub2-efi-x64-modules.noarch
 mkdosfs -F 32 -n EFI /dev/sdcEFIx # if needed to create EFI partition from scratch
+efibootmgr -c -w -L Fedora -d /dev/sdX -p partNumberWithOS -l \EFI\fedora\shim.efi
 
 mkdir /mounted
 mount /dev/sdcX /mounted
 mount /dev/sdcEFIx /mounted/boot/efi
+
+?????????? yum install grub2-efi-x64-modules.noarch
+?????????? cp -R /usr/lib/grub/x86_64-efi /mounted/usr/lib/grub/
+
 for i in /dev /dev/pts /proc /sys /sys/firmware/efi/efivars /run; do sudo mount -B $i /mounted$i; done
-cp -R /usr/lib/grub/x86_64-efi /mounted/usr/lib/grub/
+
 sudo chroot /mounted
 yum install grub2-efi-x64 shim-x64  && yum reinstall grub2-efi-x64 shim-x64
 echo 'LABEL=EFI /boot/efi vfat defaults 0 2' >> /etc/fstab ## check for existing efi entry; replace UUID or remove
-grub2-install --target=x86_64-efi ##### ????????????????????/
 grub2-mkconfig
 
-exit
-efibootmgr -c -w -L Fedora -d /dev/sdX -p partNumberWithOS -l \EFI\fedora\shim.efi
