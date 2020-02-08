@@ -1,3 +1,5 @@
+https://docs.fedoraproject.org/en-US/Fedora/22/html/Multiboot_Guide/common_operations_appendix.html#common-chroot_from_live
+https://docs.fedoraproject.org/en-US/Fedora/22/html/Multiboot_Guide/GRUB-reinstalling.html
 https://forums.gentoo.org/viewtopic-t-1002254-start-0.html
 
 #######################################################################
@@ -15,7 +17,8 @@ mount /dev/sdcEFIx /mounted/boot/efi
 for i in /dev /dev/pts /proc /sys /sys/firmware/efi/efivars /run; do sudo mount -B $i /mounted$i; done
 cp -R /usr/lib/grub/x86_64-efi /mounted/usr/lib/grub/
 sudo chroot /mounted
-
+yum install grub2-efi-x64 shim-x64  && yum reinstall grub2-efi-x64 shim-x64
+exit
 
 echo 'LABEL=EFI /boot/efi vfat defaults 0 2' >> /etc/fstab ## check for existing efi entry; replace UUID or remove
 
