@@ -1,0 +1,7 @@
+1. Create GPT disk
+2. Create FAT32 partition
+3. Download & mount windows ISO
+4. yum install wimlib wimlib-utils
+5. wimlib-imagex split ./sources/install.wim ~/Documents/install.swm 2048
+6. replace wim file with 3 swm files
+7. copy to usb and reboot with UEFI
