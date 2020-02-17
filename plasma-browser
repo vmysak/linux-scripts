@@ -1,0 +1,5 @@
+https://www.reddit.com/r/kde/comments/awtmfm/plasma_browser_integration_error/
+
+mkdir -v ~/.mozilla/native-messaging-hosts/
+
+cp /usr/lib64/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json ~/.mozilla/native-messaging-hosts/
