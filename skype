@@ -1,6 +1,6 @@
 #!/bin/bash
 
-xhost +                                                                                                                                                                                                                255 ↵
+xhost +                                                                                                                                                                                                         255 ↵
 
 su admin <<EOSU
 skypeforlinux
