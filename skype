@@ -1,3 +1,5 @@
+#!/bin/bash
+
 xhost +                                                                                                                                                                                                                255 ↵
 
 su admin <<EOSU
