@@ -1,3 +1,5 @@
 xhost +                                                                                                                                                                                                                255 ↵
-su admin
+
+su admin <<EOSU
 skypeforlinux
+EOSU
