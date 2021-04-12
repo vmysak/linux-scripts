@@ -1,0 +1,8 @@
+npm install -g markdown-pdf --unsafe-perm
+markdown-pdf ./file.md -o file.pdf
+
+
+pandoc ./file.md -o file.pdf
+
+pip install grip
+grip ./file.md
