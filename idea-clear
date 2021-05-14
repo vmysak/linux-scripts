@@ -1,0 +1,1 @@
+find ./ -name "*.iml" -exec rm -rf {} \; && find ./ -type d -name ".idea" -exec rm -rf {} \;
