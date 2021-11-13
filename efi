@@ -18,6 +18,8 @@ for i in /dev /dev/pts /proc /sys /sys/firmware/efi/efivars /run; do sudo mount 
 mkdir -p /mounted/boot/efi/EFI/fedora/
 cp -R /boot/efi/EFI/fedora/* /mounted/boot/efi/EFI/fedora/
 
+cp /etc/resolv.conf /mounted/resolv.conf
+
 sudo chroot /mounted
 
 yum install grub2-efi-x64 shim-x64  && yum reinstall grub2-efi-x64 shim-x64
