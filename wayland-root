@@ -1,0 +1,50 @@
+fedora 35
+
+https://github.com/intgr/ego
+
+Ego aims to come with sane defaults and be easy to set up.
+
+Requirements:
+
+    Rust & cargo
+    libacl.so library (Debian/Ubuntu: libacl1-dev; Fedora: libacl-devel; Arch: acl)
+
+Recommended: (Not needed when using --sudo mode, but some desktop functionality may not work).
+
+    machinectl command (Debian/Ubuntu/Fedora: systemd-container; Arch: systemd)
+    xdg-desktop-portal-gtk (Debian/Ubuntu/Fedora/Arch: xdg-desktop-portal-gtk)
+
+Installation:
+
+    Run:
+
+    cargo install ego
+    sudo cp ~/.cargo/bin/ego /usr/local/bin/
+
+    Create local user named "ego": [1]
+
+    sudo useradd ego --uid 155 --create-home
+
+    That's all, try it:
+
+    ego xdg-open .
+
+
+This explains: https://bugs.kde.org/show_bug.cgi?id=442362
+
+$ ls -al /tmp/.X11-unix
+total 0
+drwxrwxrwt  2 root   root    80 Nov 11 10:30 ./
+drwxrwxrwt 17 root   root   540 Nov 11 10:44 ../
+srwxrwxrwx  1 root   root     0 Nov 11 10:30 X0=
+srwxr-xr-x  1 cuihao cuihao   0 Nov 11 10:30 X1=
+
+I did chmod o+w /tmp/.X11-unix/X1 and ego works. It looks like a KDE specific issue.
+@cuihaoleo
+Author
+cuihaoleo commented 2 days ago
+
+It turned out it's a bug of KDE (see the KDE bugtracker link above).
+You may close the issue or keep it until KDE fix it.
+
+Thanks for the tool!
