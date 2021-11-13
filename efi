@@ -6,6 +6,8 @@ https://forums.gentoo.org/viewtopic-t-1002254-start-0.html
 
 #####################################################################
 
+init 3
+
 su - root
 modprobe efivarfs
 
