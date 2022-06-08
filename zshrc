@@ -120,3 +120,13 @@ fi
 hash -d proj=/root/projects
 
 ssh-add /root/.ssh/fandom
+
+# stern k8s logs
+function sjjq(){
+    jq -Rrc '. as $line | (fromjson? | {podName: .podName, message: .message | fromjson | .message}) // $line'
+}
+
+# k8s logs
+function jjq(){
+    jq -Rrc '. as $line | (fromjson? | {message: .message}) // $line'
+}
