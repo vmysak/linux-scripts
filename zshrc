@@ -123,10 +123,10 @@ ssh-add /root/.ssh/fandom
 
 # stern k8s logs
 function sjjq(){
-    jq -Rrc '. as $line | (fromjson? | {podName: .podName, message: .message | fromjson | .message}) // $line'
+    jq -Rrc '. as $line | (fromjson? | {p: .podName, t: .message | fromjson | ."@timestamp", message: .message | fromjson | .message}) // $line'
 }
 
 # k8s logs
 function jjq(){
-    jq -Rrc '. as $line | (fromjson? | {message: .message}) // $line'
+    jq -Rrc '. as $line | (fromjson? | {t: ."@timestamp", message: .message}) // $line'
 }
