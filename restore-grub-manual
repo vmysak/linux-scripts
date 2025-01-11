@@ -1,0 +1,25 @@
+1.  С помошью утилиты grubinst_gui выбрать внутри флешку и перезаписать mbr.
+2. На флешку в корень скопировать файлик grldr(я так понимаю сам граб)
+3. В корне флешки создать файлик menu.lst:
+
+root (hd1,7)
+kernel /vmlinuz
+initrd /initrd.img
+boot
+
+4. Должна появится консоль initramfs
+mkdir /mounted
+mount /dev/sda8 /mnt
+mount --bind /proc/ /mnt/proc/
+mount --bind /dev/ /mnt/dev/
+mount --bind /sys/ /mnt/sys/
+chroot /mnt/
+
+5.(Опционально) 
+ls /boot/
+update-initramfs -u -k x.x.x   номер последнего ядра
+
+6.
+grub-install /dev/sda
+update-grub
+reboot
