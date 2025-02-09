@@ -1,0 +1,7 @@
+Install https://github.com/TheAssassin/AppImageLauncher
+
+sudo mdkir -p /opt/appimage; sudo chmod -R 777 /opt/appimage
+
+move all appimages to the dir
+
+run appimagelauncher settings -> point to the dir
